@@ -21,11 +21,13 @@ void atmInit(){
     time_t t;
     srand((unsigned) time(&t));
     accountsDb.count = 10;
-    accountsDb.accounts = malloc(100*sizeof(Account));
+    accountsDb.accounts = malloc(accountsDb.count * sizeof(Account));
     for(int i = 0; i < accountsDb.count; i++){
         accountsDb.accounts[i].belopp = rand() % 10000;
-        sprintf(accountsDb.accounts[i].accountNo,"%d-%d-%d", randomBetween(100,999),
-        randomBetween(1000,9999), randomBetween(1000,9999));
+        sprintf(accountsDb.accounts[i].accountNo,"%d-%d-%d", 
+                                randomBetween(100,999),
+                                randomBetween(1000,9999), 
+                                randomBetween(1000,9999));
     }
 }
 
@@ -50,6 +52,7 @@ Account *atmFindAccount(const char *accountNo){
 
 Withdraw_Status atmWithdraw(const char *accountNo, float amount){
     Account *acc = atmFindAccount(accountNo);
+
     if(acc == NULL) return Withdraw_Status_No_Such_Account;
 
     if(amount > 3000) return Withdraw_Status_Too_Much_Amount;

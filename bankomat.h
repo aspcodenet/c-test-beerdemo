@@ -22,7 +22,8 @@ typedef enum {
     Deposit_Status_Negative_Amount,
 } Deposit_Status;
 
-
+// -1,0,+1
+// int strcmp
 
 
 void atmMenu();

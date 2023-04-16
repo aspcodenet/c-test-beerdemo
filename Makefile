@@ -1,9 +1,13 @@
 PROG=programmet.exe
+TEST=check.exe
 SOURCES=main.c bankomat.c
 DEPS=bankomat.h
 CC=gcc
 CFLAGS=-Wall -Werror
 DEBUG?=1
+GTEST = gtest
+LIBGTEST = C:\msys64\mingw64\lib\libgtest_main.a C:\msys64\mingw64\lib\libgtest.a
+
 ifeq ($(DEBUG), 1)
 	CFLAGS += -g
 	OUTPUTDIR=bin/debug
@@ -29,4 +33,10 @@ clean:
 $(OUTPUTDIR):
 	@mkdir "$(OUTPUTDIR)"
 
-.PHONY: clean
+$(TEST): bankomat.o TestAtm.o
+	g++ -o $@ $^ $(CFLAGS) -I $(GTEST)  $(LIBGTEST)
+
+test: $(TEST)
+	./$(TEST)
+
+.PHONY: clean test
